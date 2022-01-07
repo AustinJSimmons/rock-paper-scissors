@@ -12,9 +12,10 @@ function computerPlay() {
     return choice;
 }
 
-function round(playerSelection = prompt('Choose: Rock, Paper, or Scissors...'), computerSelection = computerPlay()) {
+function round(playerSelection, computerSelection) {
     let decision;
-    playerSelection = playerSelection.toUpperCase();
+    computerSelection = computerPlay();
+    console.log(computerSelection)
     if (computerSelection === "ROCK") {
         switch (playerSelection) {
             case 'SCISSORS':
@@ -55,23 +56,93 @@ function round(playerSelection = prompt('Choose: Rock, Paper, or Scissors...'), 
 function game() {
     let playerScore = 0;
     let computerScore = 0;
-    for (let gameCount = 1; gameCount <=5; gameCount++) {
-        decision = round();
-        if (decision.includes('WIN')) {
+    const score = document.querySelector('.score');
+    const game = document.querySelector('.game-results');
+
+    const results = document.querySelector('.results');
+    const rock = document.querySelector('.rock');
+    rock.addEventListener('click', (e) => {
+        let roundResult = round('ROCK', computerPlay);
+        results.textContent = roundResult;
+
+        if (results.textContent.includes('WIN')) {
             playerScore++;
-        } else if (decision.includes('LOSE')) {
-            computerScore++;
         } else {
-            gameCount--;
+            computerScore++;
         }
-        console.log(decision);
-    }
+        score.textContent = `Computer: ${computerScore} \n 
+        Player: ${playerScore}`; 
 
-    if (playerScore > computerScore) {
-        results = 'Congratulations! You won! The score was ' + playerScore + '-' + computerScore;
-    } else {
-        results = 'Better luck next time! The score was ' + playerScore + '-' + computerScore;
-    }
+        if (playerScore === 5) {
+            game.textContent = `Congratulations! you\'ve won with a score of ${playerScore}-${computerScore}`;
+            playerScore = 0;
+            computerScore = 0;
+        } else if (computerScore === 5) {
+            game.textContent = `Better luck next time! You lost... The score was ${playerScore}-${computerScore}`;
+            playerScore = 0;
+            computerScore = 0;
+        }
+    });
+    const paper = document.querySelector('.paper');
+    paper.addEventListener('click', (e) => {
+        roundResult = round('PAPER', computerPlay);
+        results.textContent = roundResult;
 
-    return results;
+        if (results.textContent.includes('WIN')) {
+            playerScore++;
+        } else {
+            computerScore++;
+        }
+        score.textContent = `Computer: ${computerScore} \n 
+        Player: ${playerScore}`; 
+
+        if (playerScore === 5) {
+            game.textContent = `Congratulations! you\'ve won with a score of ${playerScore}-${computerScore}`;
+            playerScore = 0;
+            computerScore = 0;
+        } else if (computerScore === 5) {
+            game.textContent = `Better luck next time! You lost... The score was ${playerScore}-${computerScore}`;
+            playerScore = 0;
+            computerScore = 0;
+        }
+    });
+    const scissors = document.querySelector('.scissors');
+    scissors.addEventListener('click', (e) => {
+        roundResult = round('SCISSORS', computerPlay);
+        results.textContent = roundResult;
+
+        if (results.textContent.includes('WIN')) {
+            playerScore++;
+        } else if (results.textContent.includes('LOSE')) {
+            computerScore++;
+        }
+        score.textContent = `Computer: ${computerScore} \n 
+        Player: ${playerScore}`;  
+
+        if (playerScore === 5) {
+            game.textContent = `Congratulations! you\'ve won with a score of ${playerScore}-${computerScore}`;
+            playerScore = 0;
+            computerScore = 0;
+        } else if (computerScore === 5) {
+            game.textContent = `Better luck next time! You lost... The score was ${playerScore}-${computerScore}`;
+            playerScore = 0;
+            computerScore = 0;
+        }
+    });
+
+
+    
+    
+
+ 
+
+
+
 }
+
+
+
+
+
+game();
+
